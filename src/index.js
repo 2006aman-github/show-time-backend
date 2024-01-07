@@ -3,12 +3,16 @@ config({ path: "./env" });
 
 import mongoose from "mongoose";
 import { DB_NAME } from "./constant.js";
-import express from "express";
+
 import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
-const app = express();
-
-connectDB();
+const PORT = process.env.PORT || 3000;
+connectDB()
+  .then((success) => {
+    app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
+  })
+  .catch((err) => console.log("MONGODB CONNECTION ERROR: " + err));
 
 // (async () => {
 //   try {
